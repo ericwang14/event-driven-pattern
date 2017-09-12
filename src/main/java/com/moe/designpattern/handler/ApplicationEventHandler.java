@@ -24,6 +24,9 @@ public final class ApplicationEventHandler {
     private final static Logger _LOGGER = Logger.getLogger(ApplicationEventHandler.class.getName());
     private final static Map<EventType, List<ApplicationEventListener<ApplicationEvent>>> LISTENERS = new HashMap<>();
 
+    private ApplicationEventHandler() {
+        throw new IllegalStateException("ApplicationEventHandler no need instance");
+    }
 
     public static Map<EventType, List<ApplicationEventListener<ApplicationEvent>>> getListeners() {
         return Collections.unmodifiableMap(LISTENERS);
