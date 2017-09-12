@@ -24,6 +24,10 @@ public class Application {
         updateEnvironment(environment);
     }
 
+    /**
+     * Update Environment
+     * @param environment
+     */
     private static void updateEnvironment(Environment environment) {
         environment.setLocation("production");
     }

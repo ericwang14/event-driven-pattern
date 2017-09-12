@@ -3,8 +3,15 @@ package com.moe.designpattern.listener;
 import com.moe.designpattern.event.EnvironmentCreateEvent;
 import com.moe.designpattern.event.EventType;
 
+import java.util.Objects;
 import java.util.logging.Logger;
 
+/**
+ * Environment create event listener
+ *
+ * @author ericw
+ * @since 9/11/17
+ */
 public final class EnvironmentCreateEventListener implements ApplicationEventListener<EnvironmentCreateEvent> {
 
     private final static Logger _LOGGER = Logger.getLogger(EnvironmentCreateEventListener.class.getName());
@@ -22,5 +29,25 @@ public final class EnvironmentCreateEventListener implements ApplicationEventLis
 
     public boolean acceptable(EventType eventType) {
         return EventType.ENVIRONMENT_CREATE.equals(eventType);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+
+        if (!(o instanceof EnvironmentCreateEventListener)) {
+            return false;
+        }
+
+        EnvironmentCreateEventListener obj = (EnvironmentCreateEventListener) o;
+
+        return this.getEvent().equals(obj.getEvent());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getEvent());
     }
 }

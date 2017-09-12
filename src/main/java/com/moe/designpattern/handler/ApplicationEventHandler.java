@@ -4,16 +4,30 @@ import com.moe.designpattern.event.ApplicationEvent;
 import com.moe.designpattern.event.EventType;
 import com.moe.designpattern.listener.ApplicationEventListener;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Logger;
 
+/**
+ * Application events handler
+ * this class used to register/deregister {@link ApplicationEventListener} to {@link ApplicationEvent}
+ * one event can have multiple registered listeners.
+ * for the listener and event please refer to {@link ApplicationEventListener} and {@link ApplicationEvent}
+ *
+ * the {@link #publish(ApplicationEvent)} method used to trigger the event,
+ * all the registered listeners for that event will be getting triggered.
+ *
+ * @author ericw
+ * @since 9/11/17
+ */
 public final class ApplicationEventHandler {
 
     private final static Logger _LOGGER = Logger.getLogger(ApplicationEventHandler.class.getName());
-    private final static HashMap<EventType, List<ApplicationEventListener<ApplicationEvent>>> LISTENERS = new HashMap<>();
+    private final static Map<EventType, List<ApplicationEventListener<ApplicationEvent>>> LISTENERS = new HashMap<>();
 
+
+    public static Map<EventType, List<ApplicationEventListener<ApplicationEvent>>> getListeners() {
+        return Collections.unmodifiableMap(LISTENERS);
+    }
     /**
      * Register listener to event
      * if the listener not acceptable by event, throw out {@link IllegalArgumentException}
@@ -33,15 +47,16 @@ public final class ApplicationEventHandler {
     }
 
     /**
-     * Remove listener
-     * @param listener
+     * de-register event
+     * @param eventType - event type
      */
-    public static void deRegister(ApplicationEventListener listener) {
-        List<ApplicationEventListener<ApplicationEvent>> list = LISTENERS.get(listener.getEvent().getType());
-        list.remove(listener);
+    public static void deRegister(EventType eventType) {
+        if (!LISTENERS.containsKey(eventType)) {
+            return;
+        }
+        LISTENERS.remove(eventType);
 
-
-        _LOGGER.info("remove listener " + listener);
+        _LOGGER.info("remove event " + eventType);
     }
 
     /**

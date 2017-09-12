@@ -4,7 +4,14 @@ import com.moe.designpattern.model.Environment;
 
 import java.util.Objects;
 
+/**
+ * Environment Create event
+ *
+ * @author ericw
+ * @since 9/11/17
+ */
 public class EnvironmentCreateEvent implements ApplicationEvent {
+
     private final Environment environment;
 
     public EnvironmentCreateEvent(Environment environment) {
